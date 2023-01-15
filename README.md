@@ -1,4 +1,4 @@
-# Terrain-of-Thought
+# Terrain of Thought
 Rosehacks 2023 Project
 
 Who here has ever made a to-do list? Of course we all have! However, on many occasions, we find that our to-do list looks like this (shows a long ass list of things to-do) For many, a list this long can be overwhelming to look at. It’s stress-inducing seeing the large amount of work you have left, and chances are, it is left incomplete and you are left unsatisfied. Often, our to-do lists can be unrealistic for a single day's work as well! 
