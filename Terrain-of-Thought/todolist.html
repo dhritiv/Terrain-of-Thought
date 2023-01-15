@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<link href="https://fonts.google.com/share?selection.family=Sofia%20Sans">
+
+<head>
+  <style media="screen">
+    *,
+    *:before,
+    *:after {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+      width: 100%;
+      background-color: #0b5f39;
+      color: #ffffff background-repeat: no-repeat;
+      font-family: 'Sofia Sans', sans-serif;
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center;
+    }
+
+    .container {
+        
+      width: 40%;
+      min-width: 450px;
+      position: absolute;
+      transform: translate(-50%, -50%);
+      top: 50%;
+      left: 50%;
+      background: white;
+      border-radius: 10px;
+
+
+    }
+
+    #newtask {
+      position: relative;
+      padding: 30px 20px;
+    }
+
+    #newtask input {
+      width: 75%;
+      height: 45px;
+      font-family: 'Sofia Sans', sans-serif;
+      color: #ffffff 
+          font-size: 25px;
+      border: 2px solid #d1d3d4;
+      padding: 12px;
+      color: #111111;
+      font-weight: 500;
+      position: relative;
+      border-radius: 5px;
+    }
+
+    #newtask input:focus {
+      outline: none;
+      color: #ffffff 
+          border-color: #0d75ec;
+        font-family: 'Sofia Sans', sans-serif;
+    }
+
+    #newtask button {
+      position: relative;
+      float: right;
+      width: 20%;
+      height: 45px;
+      border-radius: 5px;
+      font-family: 'Sofia Sans', sans-serif;
+      font-weight: 500;
+      font-size: 20px;
+      background-color: #723d46;
+      border: none;
+      color: #ffffff;
+      cursor: pointer;
+      outline: none;
+    }
+
+    #tasks {
+      background-color: #4a6741;
+      color: #ffffff 
+          text-align: center;
+      font-family: 'Sofia Sans', sans-serif;
+      padding: 30px 20px;
+      margin-top: 10px;
+      border-radius: 10px;
+      width: 80%;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .task {
+      background-color: #c5e1e6;
+      color: #ffffff height: 50px;
+      font-family: 'Sofia Sans', sans-serif;
+      margin-bottom: 8px;
+      padding: 5px 10px;
+      display: flex;
+      border-radius: 5px;
+      align-items: right;
+      justify-content: space-between;
+      border: 1px solid #939697;
+      cursor: pointer;
+    }
+
+    .task span {
+      font-family: 'Sofia Sans', sans-serif;
+
+      font-size: 20px;
+      color: #ffffff font-weight: 400;
+    }
+
+    .task button {
+      background-color: #723d46;
+      font-family: 'Sofia Sans', sans-serif;
+      color: #ffffff;
+      height: 100%;
+      width: 40px;
+      border-radius: 5px;
+      border: none;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .toDoButton {
+      font-family: 'Sofia Sans', sans-serif;
+      font-weight: 500;
+      font-size: 20px;
+      width: 15%;
+      background-color: #723d46;
+      color: #ffffff;
+      border: none;
+      margin-top: 20px;
+      margin-left: 250px;
+      margin-bottom: 30px;
+      border-radius: 5px;
+      padding: 10px;
+    }
+
+    .completed {
+      text-decoration: line-through;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <div class="container">
+      <div id="newtask">
+        <input class=taskInput type="text" placeholder="Please Enter 5 Tasks">
+        <button id="push">Add</button>
+      </div>
+
+      <div id="tasks"></div>
+      <button class=toDoButton id="start">Start</button>
+      <!--       <a href="final.html"> <button class=toDoButton id="push">Done</button></a> -->
+    </div>
+  </div>
+
+  <!--Script-->
+
+
+
+  <script type="text/javascript">
+    let userTodos = []; // array of user objects called todos, and this stores json objects with a string with the actual task info and a boolean set to false by default (is the task done or not)
+
+    function createTodoItem(item, index) {
+      document.getElementById('tasks').innerHTML += `
+        <div class="todo-item" onclick="toggleTodoCompletion(${index});">
+            <div class="todo-content ${item.isComplete && "todo-complete"}"> ${item.todoContent} </div>
+            <div class="todo-check"> ${item.isComplete ? "◯" : "◯"} </div>
+        </div> `;
+    }
+
+    function toggleTodoCompletion(index) {
+      userTodos[index].isComplete = !userTodos[index].isComplete;
+      display();
+    }
+
+
+    function display() {
+      document.getElementById('tasks').innerHTML = ""; // clears the html of the tasks section
+      userTodos.forEach(createTodoItem); // re-draw the entire thing, except with the new, updated values //
+
+      // 
+      document.getElementById('tasks').innerHTML += ` 
+        <div class="todo-user--add" onclick="promptTodo();">
+            
+        </div>
+    `;
+      // document.body.style.backgroundImage = 'url("images/env' + userTodos.length + '.png")';
+      let incompleteTasks = 1; // integer variable which has the user tasks that's not completed, aka the task array length
+      for (let i = 0; i < userTodos.length; i++) {
+        if (!userTodos[i].isComplete) {
+          incompleteTasks++;
+        }
+      }
+      // document.body.style.backgroundImage = `url("images/env${incompleteTasks}.png")`;
+
+
+    }
+    document.querySelector('#push').onclick = function () { // add button has the ID of push, on click it'll call the function down below
+      // if (document.querySelector('#newtask input').value.length == 0) {
+      //   alert("Please Enter a Task")
+      // }
+      // else {
+      //   document.querySelector('#tasks').innerHTML += `
+      //       <div class="task">
+      //           <span id="taskname" onclick="">
+
+      //               ${document.querySelector('#newtask input').value} 
+      //           </span>
+      //           <button class="delete">
+      //               <i class="far fa-trash-alt"></i>
+      //           </button>
+      //       </div>
+      //   `;
+
+      //   var current_tasks = document.querySelectorAll(".delete");
+      //   for (var i = 0; i < current_tasks.length; i++) {
+      //     current_tasks[i].onclick = function () {
+      //       this.parentNode.remove();
+      //     }
+      //   }
+      // }
+      if (userTodos.length < 5) {
+        userTodos.push({ // pushes the object into the userTodos array
+          todoContent: document.querySelector('#newtask input').value, // the actual value of the string that the user inputs (user task), gets the value of the html node with the id of #newtask input
+          isComplete: false // whether the task is completed or not, this is a DEFAULT variable
+        });
+      }
+      else {
+        alert('You have already inserted 5 items.');
+      }
+      document.getElementById("tasks").style.color = "#FFFFFF"
+
+      display(); // calling the display function, which renders the object onto the page
+    }
+
+    document.querySelector('#start').onclick = function () {
+      window.location = "./todolist2.html?data=" + encodeURI(JSON.stringify(userTodos));
+      display();
+    }
+  </script>
+</body>
+
+</html>
